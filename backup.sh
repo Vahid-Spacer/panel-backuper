@@ -6,7 +6,6 @@ readonly TAG="_backuper."
 readonly BACKUP_SUFFIX="${TAG}zip"
 readonly DATABASE_SUFFIX="${TAG}sql"
 readonly LOGS_SUFFIX="${TAG}log"
-readonly VERSION="v0.6.0"
 
 # ANSI color codes
 declare -A COLORS=(
@@ -112,7 +111,7 @@ menu() {
     install_yq
     while true; do
         clear
-        print "======== Backuper Menu [$VERSION] ========"
+        print "======== Backuper Menu ========"
         print ""
         print "1️) Install Backuper"
         print "2) Remove All Backupers"
@@ -139,7 +138,7 @@ menu() {
                 confirm
                 ;;
             4)
-                print "Thank you for using @NimbahaVPN_BoT script. Goodbye!"
+                print "Thank you for using this script. Goodbye!"
                 exit 0
                 ;;
             *)
@@ -1256,9 +1255,7 @@ telegram_progress() {
         PLATFORM_COMMAND="curl -s -F \"chat_id=$CHAT_ID\" -F \"document=@\$FILE\" -F \"caption=\$CAPTION\" -F \"parse_mode=HTML\" \"https://api.telegram.org/bot$BOT_TOKEN/sendDocument\""
     fi
     
-    CAPTION="
-📦 <b>From </b><code>\${ip}</code> [By <b><a href='https://t.me/NimbahaVPN_BoT'>@NimbahaVPN_BoT</a></b>]
-"
+    CAPTION="📦 <b>From </b><code>\${ip}</code>"
     success "Telegram configuration completed successfully."
     LIMITSIZE=49
     sleep 1
@@ -1295,7 +1292,7 @@ discord_progress() {
 
     # Set the platform command for sending files
     PLATFORM_COMMAND="curl -s -F \"file=@\$FILE\" -F \"payload_json={\\\"content\\\": \\\"\$CAPTION\\\"}\" \"$DISCORD_WEBHOOK\""
-    CAPTION="📦 **From** \`${ip}\` [by **[@NimbahaVPN_BoT](https://t.me/NimbahaVPN_BoT)**]\n"
+    CAPTION="📦 **From** \`${ip}\`\n"
     LIMITSIZE=24
     success "Discord configuration completed successfully."
     sleep 1
@@ -1369,7 +1366,7 @@ set envelope_from=yes
 EOF
 
             chmod 600 ~/.muttrc
-            CAPTION="<html><body><p><b>📦 From </b><code>\${ip}</code> [by <b><a href='https://t.me/NimbahaVPN_BoT'>@NimbahaVPN_BoT</a></b>]</p></body></html>"
+            CAPTION="<html><body><p><b>📦 From </b><code>\${ip}</code></p></body></html>"
             PLATFORM_COMMAND="echo \$CAPTION | mutt -e 'set content_type=text/html' -s 'Backuper' -a \"\$FILE\" -- \"$GMAIL_ADDRESS\""
             LIMITSIZE=24
             break
@@ -1464,7 +1461,7 @@ EOL
         success "Backup script location: $BACKUP_PATH"
         success "Cron job: Every $minutes minutes"
         success "First backup created and sent."
-        success "Thank you for using @NimbahaVPN_BoT backup script. Enjoy automated backups!"
+        success "Thank you for using this backup script. Enjoy automated backups!"
         exit 0
     else
         error "Failed to run backup script. Full output:"
